@@ -29,6 +29,10 @@ public class PedidoService {
   public Pedido criarNovoPedido(final Pedido pedido) {
     log.info("Inicio - [método]=criarNovoPedido, pedido={}", pedido);
 
+    if (Objects.isNull(pedido.getClienteUuid())) {
+      throw new PedidoException("Pedido deve estar associado a um cliente.");
+    }
+
     if (CollectionUtils.isEmpty(pedido.getItens())) {
       throw new PedidoException("Pedido deve conter pelo menos um item.");
     }
@@ -36,10 +40,6 @@ public class PedidoService {
     final BigDecimal valorTotalCalculado = calcularValorTotal(pedido);
     if (BigDecimal.ZERO.compareTo(valorTotalCalculado) > 0) {
       throw new PedidoException("Valor total do pedido inválido.");
-    }
-
-    if (Objects.isNull(pedido.getClienteUuid())) {
-      throw new PedidoException("Pedido deve estar associado a um cliente.");
     }
 
     pedido.setValorTotal(valorTotalCalculado);
