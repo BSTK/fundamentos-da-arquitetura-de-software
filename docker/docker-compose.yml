@@ -1,0 +1,148 @@
+services:
+  ms-fas-entrega-db:
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_DB: ms_fas_entrega_db
+      POSTGRES_USER: ms_fas_entrega_user
+      POSTGRES_PASSWORD: ms_fas_entrega_password
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ms_fas_entrega_db" ]
+      interval: 5s
+      timeout: 5s
+      retries: 6
+    ports:
+      - "5432:5432"
+    networks:
+      - ms-fas-backend
+    volumes:
+      - ms-fas-entrega-data:/var/lib/postgresql/data
+
+  ms-fas-estoque-db:
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_DB: ms_fas_estoque_db
+      POSTGRES_USER: ms_fas_estoque_user
+      POSTGRES_PASSWORD: ms_fas_estoque_password
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ms_fas_estoque_db" ]
+      interval: 5s
+      timeout: 5s
+      retries: 6
+    ports:
+      - "5432:5432"
+    networks:
+      - ms-fas-backend
+    volumes:
+      - ms-fas-estoque-data:/var/lib/postgresql/data
+
+  ms-fas-expedicao-db:
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_DB: ms_fas_expedicao_db
+      POSTGRES_USER: ms_fas_expedicao_user
+      POSTGRES_PASSWORD: ms_fas_expedicao_password
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ms_fas_expedicao_db" ]
+      interval: 5s
+      timeout: 5s
+      retries: 6
+    ports:
+      - "5432:5432"
+    networks:
+      - ms-fas-backend
+    volumes:
+      - ms-fas-expedicao-data:/var/lib/postgresql/data
+
+  ms-fas-inventario-db:
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_DB: ms_fas_inventario_db
+      POSTGRES_USER: ms_fas_inventario_user
+      POSTGRES_PASSWORD: ms_fas_inventario_password
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ms_fas_inventario_db" ]
+      interval: 5s
+      timeout: 5s
+      retries: 6
+    ports:
+      - "5432:5432"
+    networks:
+      - ms-fas-backend
+    volumes:
+      - ms-fas-inventario-data:/var/lib/postgresql/data
+
+  ms-fas-notificacao-db:
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_DB: ms_fas_notificacao_db
+      POSTGRES_USER: ms_fas_notificacao_user
+      POSTGRES_PASSWORD: ms_fas_notificacao_password
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ms_fas_notificacao_db" ]
+      interval: 5s
+      timeout: 5s
+      retries: 6
+    ports:
+      - "5432:5432"
+    networks:
+      - ms-fas-backend
+    volumes:
+      - ms-fas-notificacao-data:/var/lib/postgresql/data
+
+  ms-fas-pagamento-db:
+    image: postgres:14-alpine
+    environment:
+      - "POSTGRES_DB=ms_fas_pagamento_db"
+      - "POSTGRES_USER=ms_fas_pagamento_user"
+      - "POSTGRES_PASSWORD=ms_fas_pagamento_password"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ms_fas_pagamento_db" ]
+      interval: 5s
+      timeout: 5s
+      retries: 6
+    ports:
+      - "5432:5432"
+    networks:
+      - ms-fas-backend
+    volumes:
+      - ms-fas-pagamento-data:/var/lib/postgresql/data
+
+  ms-fas-pedido-db:
+    image: postgres:14-alpine
+    environment:
+      - "POSTGRES_DB=ms_fas_pedido_db"
+      - "POSTGRES_USER=ms_fas_pedido_user"
+      - "POSTGRES_PASSWORD=ms_fas_pedido_password"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ms_fas_pedido_db" ]
+      interval: 5s
+      timeout: 5s
+      retries: 6
+    ports:
+      - "5432:5432"
+    networks:
+      - ms-fas-backend
+    volumes:
+      - ms-fas-pedido-data:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+networks:
+  ms-fas-backend:
+    driver: bridge
+
+volumes:
+  ms-fas-entrega-data:
+  ms-fas-estoque-data:
+  ms-fas-expedicao-data:
+  ms-fas-inventario-data:
+  ms-fas-notificacao-data:
+  ms-fas-pagamento-data:
+  ms-fas-pedido-data:
