@@ -23,3 +23,16 @@ spring:
     url: jdbc:postgresql://localhost:5432/ms_fas_pedido_db
     username: ms_fas_pedido_user
     password: ms_fas_pedido_password
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+msfaspedido:
+  messagebroker:
+    pedido:
+      duravel: true
+      queue: queue-pedido-criado-v1
+      exchange: exchange-pedido

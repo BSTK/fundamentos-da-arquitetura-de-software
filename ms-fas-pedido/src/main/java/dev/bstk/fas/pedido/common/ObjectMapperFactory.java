@@ -7,8 +7,9 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 public final class ObjectMapperFactory {
 
   public static ObjectMapper OBJECT_MAPPER = new ObjectMapper()
+      .registerModule(new JavaTimeModule())
       .registerModule(new Jdk8Module())
-      .registerModule(new JavaTimeModule());
+      .findAndRegisterModules();
 
   private ObjectMapperFactory() {}
 
