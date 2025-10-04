@@ -1,26 +1,9 @@
 package dev.bstk.fas.pedido.domain.entity;
 
 import dev.bstk.fas.pedido.domain.entity.converter.EnderecoJsonbConverter;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnTransformer;
 
 import java.io.Serial;
@@ -51,6 +34,7 @@ public class Pedido implements Serializable {
   @Column(name = "CLIENTE_UUID")
   private UUID clienteUuid;
 
+  @Builder.Default
   @JoinColumn(name = "PEDIDO_ID")
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
   private List<PedidoItem> itens = new ArrayList<>();

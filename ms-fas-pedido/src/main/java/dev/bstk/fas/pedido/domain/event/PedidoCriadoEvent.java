@@ -13,8 +13,8 @@ import java.util.UUID;
 
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class PedidoCriadoEvent {
 
   private Long id;
@@ -27,8 +27,8 @@ public class PedidoCriadoEvent {
 
   @Data
   @Builder
-  @AllArgsConstructor
   @NoArgsConstructor
+  @AllArgsConstructor
   public static class ItemPedidoCriadoEvent {
 
     private UUID livroUuid;
@@ -40,8 +40,8 @@ public class PedidoCriadoEvent {
 
   @Data
   @Builder
-  @AllArgsConstructor
   @NoArgsConstructor
+  @AllArgsConstructor
   public static class EnderecoPedidoCriadoEvent {
 
     private String logradouro;

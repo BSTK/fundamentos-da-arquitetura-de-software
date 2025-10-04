@@ -129,6 +129,9 @@ services:
     image: rabbitmq:3.11.8-management
     container_name: rabbitmq
     mem_limit: 256m
+    environment:
+      - "RABBITMQ_DEFAULT_USER=ms-fas"
+      - "RABBITMQ_DEFAULT_PASS=ms-fas"
     ports:
       - "5672:5672"
       - "15672:15672"
