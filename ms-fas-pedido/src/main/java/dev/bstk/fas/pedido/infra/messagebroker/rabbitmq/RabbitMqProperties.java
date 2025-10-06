@@ -1,4 +1,4 @@
-package dev.bstk.fas.pedido.infra.messagebroker.config;
+package dev.bstk.fas.pedido.infra.messagebroker.rabbitmq;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,12 +10,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMqProperties {
 
-  @Value("${msfaspedido.messagebroker.pedido.queue}")
-  private String queue;
-
-  @Value("${msfaspedido.messagebroker.pedido.exchange}")
+  @Value("${msfaspedido.messagebroker.rabbitmq.pedido.exchange}")
   private String exchange;
 
-  @Value("${msfaspedido.messagebroker.pedido.duravel}")
+  @Value("${msfaspedido.messagebroker.rabbitmq.pedido.duravel}")
   private boolean duravel;
 }

@@ -1,21 +1,25 @@
 package dev.bstk.fas.pedido.domain.event;
 
 import dev.bstk.fas.pedido.domain.entity.PedidoStatus;
+import dev.bstk.fas.pedido.infra.messagebroker.MessageBrokerEvento;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class PedidoCriadoEvent {
+@EqualsAndHashCode(callSuper = true)
+public class PedidoCriadoEvent extends MessageBrokerEvento {
 
   private Long id;
   private UUID clienteUuid;
@@ -24,6 +28,11 @@ public class PedidoCriadoEvent {
   private PedidoStatus status;
   private EnderecoPedidoCriadoEvent enderecoEntrega;
   private List<ItemPedidoCriadoEvent> itens;
+
+  @Override
+  protected Object getPayload() {
+    return this;
+  }
 
   @Data
   @Builder

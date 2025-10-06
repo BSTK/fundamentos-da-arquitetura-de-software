@@ -2,6 +2,7 @@ package dev.bstk.fas.pedido.domain;
 
 import dev.bstk.fas.pedido.domain.entity.Pedido;
 import dev.bstk.fas.pedido.domain.entity.PedidoStatus;
+import dev.bstk.fas.pedido.infra.messagebroker.MessageBrokerProduce;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,8 @@ import static java.math.BigDecimal.valueOf;
 public class PedidoService {
 
   private final PedidoMapper pedidoMapper;
-  private final PedidoProducer pedidoProducer;
   private final PedidoRepository pedidoRepository;
+  private final MessageBrokerProduce messageBrokerProduce;
 
   public List<Pedido> listarPedidos() {
     return pedidoRepository.listarPedidos();
@@ -47,7 +48,7 @@ public class PedidoService {
 
     final var pedidoSalvo = pedidoRepository.save(pedido);
     final var pedidoCriadoEvento = pedidoMapper.toEvent(pedidoSalvo);
-    pedidoProducer.enviarEvento(pedidoCriadoEvento);
+    messageBrokerProduce.publicarEvento(pedidoCriadoEvento);
 
     log.info("Fim - [método]=criarNovoPedido, pedidoSalvo={}", pedidoSalvo);
 
@@ -56,8 +57,8 @@ public class PedidoService {
 
   private BigDecimal calcularValorTotal(final Pedido pedido) {
     return pedido.getItens()
-        .stream()
-        .map(item -> item.getPrecoUnitario().multiply(valueOf(item.getQuantidade())))
-        .reduce(BigDecimal.ZERO, BigDecimal::add);
+            .stream()
+            .map(item -> item.getPrecoUnitario().multiply(valueOf(item.getQuantidade())))
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
   }
 }

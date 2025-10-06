@@ -15,8 +15,8 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/v1/pedidos")
 @RequiredArgsConstructor
+@RequestMapping("/v1/pedidos")
 public class PedidoController {
 
   private final PedidoMapper pedidoMapper;
