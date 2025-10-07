@@ -1,6 +1,10 @@
 package dev.bstk.fas.pedido.infra.messagebroker;
 
-import lombok.EqualsAndHashCode;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,17 +13,18 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public abstract class MessageBrokerEvento {
+@Builder
+@AllArgsConstructor
+public class MessageBrokerEvento {
 
-  @EqualsAndHashCode.Include
-  private final UUID eventId;
-  private final LocalDateTime timestamp;
+  @Builder.Default
+  private final UUID eventId = UUID.randomUUID();
 
-  protected MessageBrokerEvento() {
-    this.eventId = UUID.randomUUID();
-    this.timestamp = LocalDateTime.now();
-  }
+  @Builder.Default
+  @JsonFormat(shape = JsonFormat.Shape.STRING)
+  private final LocalDateTime timestamp = LocalDateTime.now();
 
-  protected abstract Object getPayload();
+  @NotNull
+  @NotEmpty
+  private final Object payload;
 }

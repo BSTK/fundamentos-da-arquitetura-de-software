@@ -2,6 +2,7 @@ package dev.bstk.fas.pedido.domain;
 
 import dev.bstk.fas.pedido.domain.entity.Pedido;
 import dev.bstk.fas.pedido.domain.entity.PedidoStatus;
+import dev.bstk.fas.pedido.infra.messagebroker.MessageBrokerEvento;
 import dev.bstk.fas.pedido.infra.messagebroker.MessageBrokerProduce;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,7 +48,9 @@ public class PedidoService {
     pedido.setStatus(PedidoStatus.PENDENTE_PAGAMENTO);
 
     final var pedidoSalvo = pedidoRepository.save(pedido);
-    final var pedidoCriadoEvento = pedidoMapper.toEvent(pedidoSalvo);
+    final var pedidoCriadoPayload = pedidoMapper.toEvent(pedidoSalvo);
+    final var pedidoCriadoEvento = MessageBrokerEvento.builder().payload(pedidoCriadoPayload).build();
+
     messageBrokerProduce.publicarEvento(pedidoCriadoEvento);
 
     log.info("Fim - [método]=criarNovoPedido, pedidoSalvo={}", pedidoSalvo);

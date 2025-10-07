@@ -1,11 +1,10 @@
 package dev.bstk.fas.pedido.domain.event;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import dev.bstk.fas.pedido.domain.entity.PedidoStatus;
-import dev.bstk.fas.pedido.infra.messagebroker.MessageBrokerEvento;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,21 +17,19 @@ import java.util.UUID;
 @Getter
 @Setter
 @Builder
-@EqualsAndHashCode(callSuper = true)
-public class PedidoCriadoEvent extends MessageBrokerEvento {
+@NoArgsConstructor
+@AllArgsConstructor
+public class PedidoCriadoEvent {
 
   private Long id;
   private UUID clienteUuid;
   private BigDecimal valorTotal;
+
+  @JsonFormat(shape = JsonFormat.Shape.STRING)
   private LocalDateTime dataCriacao;
   private PedidoStatus status;
   private EnderecoPedidoCriadoEvent enderecoEntrega;
   private List<ItemPedidoCriadoEvent> itens;
-
-  @Override
-  protected Object getPayload() {
-    return this;
-  }
 
   @Data
   @Builder
