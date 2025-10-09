@@ -28,7 +28,7 @@ public class PedidoService {
     return pedidoRepository.listarPedidos();
   }
 
-  public Pedido criarNovoPedido(final Pedido pedido) {
+  public Pedido criarPedido(final Pedido pedido) {
     log.info("Inicio - [método]=criarNovoPedido, pedido={}", pedido);
 
     if (Objects.isNull(pedido.getClienteUuid())) {

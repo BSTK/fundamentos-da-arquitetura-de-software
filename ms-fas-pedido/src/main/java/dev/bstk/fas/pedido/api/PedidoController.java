@@ -31,7 +31,7 @@ public class PedidoController {
     log.info("Inicio - [método]=criarNovoPedido, request={}", request);
 
     final var pedido = pedidoMapper.toEntity(request);
-    final var pedidoSalvo = pedidoService.criarNovoPedido(pedido);
+    final var pedidoSalvo = pedidoService.criarPedido(pedido);
     final var pedidoResponse = pedidoMapper.toResponse(pedidoSalvo);
 
     log.info("Fim - [método]=criarNovoPedido, status=finalizando, pedidoResponse={}", pedidoResponse);
